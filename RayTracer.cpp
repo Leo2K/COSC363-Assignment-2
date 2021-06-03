@@ -40,7 +40,7 @@ vector<SceneObject*> sceneObjects;
 //----------------------------------------------------------------------------------
 glm::vec3 trace(Ray ray, int step)
 {
-	glm::vec3 backgroundCol(0.95);						//Background colour = (0,0,0)
+	glm::vec3 backgroundCol(0);						//Background colour = (0,0,0)
 	glm::vec3 lightPos(10, 40, -3);	
 	glm::vec3 lightPos2(-20, 40, -3);               //Light's position
 	glm::vec3 color(0);
@@ -150,10 +150,10 @@ glm::vec3 trace(Ray ray, int step)
     }
 
 	// fog
-	int z1 = -65;
-	int z2 = -215;
-	float t = (ray.hit.z - z1) / (z2 - z1);
-	color = (1 - t) * color + glm::vec3(t, t, t);
+	//int z1 = -65;
+	//int z2 = -215;
+	//float t = (ray.hit.z - z1) / (z2 - z1);
+	//color = (1 - t) * color + glm::vec3(t, t, t);
 	
 
 
