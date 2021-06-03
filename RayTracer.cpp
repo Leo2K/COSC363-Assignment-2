@@ -40,7 +40,7 @@ vector<SceneObject*> sceneObjects;
 //----------------------------------------------------------------------------------
 glm::vec3 trace(Ray ray, int step)
 {
-	glm::vec3 backgroundCol(0);						//Background colour = (0,0,0)
+	glm::vec3 backgroundCol(0.95);						//Background colour = (0,0,0)
 	glm::vec3 lightPos(10, 40, -3);	
 	glm::vec3 lightPos2(-20, 40, -3);               //Light's position
 	glm::vec3 color(0);
@@ -56,10 +56,10 @@ glm::vec3 trace(Ray ray, int step)
 		int zCurrent = (int)((ray.hit.z + 250) / 5) % 2;
 
 		if ((xCurrent && zCurrent) || (!xCurrent && !zCurrent)) {
-			sceneObjects[4]->setColor(glm::vec3(1));
+			sceneObjects[4]->setColor(glm::vec3(0, 1, 0));
 		}
 		else {
-			sceneObjects[4]->setColor(glm::vec3(0));
+			sceneObjects[4]->setColor(glm::vec3(1));
 		}
 	}
 
@@ -150,8 +150,8 @@ glm::vec3 trace(Ray ray, int step)
     }
 
 	// fog
-	int z1 = -75;
-	int z2 = -210;
+	int z1 = -65;
+	int z2 = -215;
 	float t = (ray.hit.z - z1) / (z2 - z1);
 	color = (1 - t) * color + glm::vec3(t, t, t);
 	
@@ -246,7 +246,7 @@ void initialize()
     glClearColor(0, 0, 0, 1);
 
 	Sphere* sphere1 = new Sphere(glm::vec3(-7, -6, -120), 8);
-	sphere1->setColor(glm::vec3(0, 0, 1));
+	sphere1->setColor(glm::vec3(1, 0, 0));
 	sphere1->setReflectivity(true, 0.8);
 	sceneObjects.push_back(sphere1);
 
