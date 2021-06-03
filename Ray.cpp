@@ -5,6 +5,12 @@
 -------------------------------------------------------------*/
 #include "Ray.h"
 
+
+void Ray::normalize()
+{
+	dir = glm::normalize(dir);
+}
+
 //Finds the closest point of intersection of the current ray with scene objects
 void Ray::closestPt(std::vector<SceneObject*> &sceneObjects)
 {
@@ -27,4 +33,5 @@ void Ray::closestPt(std::vector<SceneObject*> &sceneObjects)
 	}
 
 }
+
 

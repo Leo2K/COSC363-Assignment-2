@@ -31,6 +31,7 @@ public:
 		p0 = p0 + RSTEP * dir;   //Ray stepping
 	}
 
+	void normalize();
 	void closestPt(std::vector<SceneObject*>& sceneObjects);
 
 };

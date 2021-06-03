@@ -149,6 +149,8 @@ glm::vec3 trace(Ray ray, int step)
         color = color + (obj->getRefractionCoeff() * col2);
     }
 
+
+
 	// fog
 	//int z1 = -65;
 	//int z2 = -215;
@@ -158,6 +160,22 @@ glm::vec3 trace(Ray ray, int step)
 
 
 	return color;
+}
+
+glm::vec3 antiAliasing(Ray ray, glm::vec3 eye, float xp, float yp) {
+    
+	glm::vec3 avg(0.25);
+
+    Ray first = Ray(eye, glm::vec3(xp + ((XMAX - XMIN) / NUMDIV) * 0.25, yp + ((XMAX - XMIN) / NUMDIV) * 0.25, -EDIST));
+	first.normalize();
+    Ray second = Ray(eye, glm::vec3(xp + ((XMAX - XMIN) / NUMDIV) * 0.25, yp + ((XMAX - XMIN) / NUMDIV) * 0.75, -EDIST));
+	second.normalize();
+    Ray third = Ray(eye, glm::vec3(xp + ((XMAX - XMIN) / NUMDIV) * 0.75, yp + ((XMAX - XMIN) / NUMDIV) * 0.25, -EDIST));
+	third.normalize();
+    Ray fourth = Ray(eye, glm::vec3(xp + ((XMAX - XMIN) / NUMDIV) * 0.75, yp + ((XMAX - XMIN) / NUMDIV) * 0.75, -EDIST));
+    fourth.normalize();
+
+    return (trace(first, 1) + trace(second, 1) + trace(third, 1) + trace(fourth, 1)) * avg;
 }
 
 void drawPyramid() {
@@ -215,9 +233,11 @@ void display()
 
 		    glm::vec3 dir(xp+0.5*cellX, yp+0.5*cellY, -EDIST);	//direction of the primary ray
 
-		    Ray ray = Ray(eye, dir);
+			Ray ray = Ray(eye, dir);
+			ray.normalize();                
+			glm::vec3 col = antiAliasing(ray, eye, xp, yp);
 
-		    glm::vec3 col = trace (ray, 1); //Trace the primary ray and get the colour value
+		    //glm::vec3 col = trace (ray, 1); //Trace the primary ray and get the colour value
 			glColor3f(col.r, col.g, col.b);
 			glVertex2f(xp, yp);				//Draw each cell with its color value
 			glVertex2f(xp+cellX, yp);
